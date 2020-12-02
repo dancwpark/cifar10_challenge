@@ -12,8 +12,10 @@ from __future__ import print_function
 import os
 import pickle
 import sys
-import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
+import tensorflow.compat.v1 as tf
+tf.compat.v1.disable_eager_execution()
+tf.disable_v2_behavior()
+#from tensorflow.examples.tutorials.mnist import input_data
 version = sys.version_info
 
 import numpy as np

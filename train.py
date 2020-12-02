@@ -10,7 +10,9 @@ import os
 import shutil
 from timeit import default_timer as timer
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.compat.v1.disable_eager_execution()
+tf.disable_v2_behavior()
 import numpy as np
 
 from model import Model
@@ -37,7 +39,8 @@ batch_size = config['training_batch_size']
 
 # Setting up the data and the model
 raw_cifar = cifar10_input.CIFAR10Data(data_path)
-global_step = tf.contrib.framework.get_or_create_global_step()
+#global_step = tf.contrib.framework.get_or_create_global_step()
+global_step = tf.train.get_or_create_global_step()
 model = Model(mode='train')
 
 # Setting up the optimizer

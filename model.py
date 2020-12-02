@@ -4,7 +4,9 @@ from __future__ import division
 from __future__ import print_function
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.compat.v1.disable_eager_execution()
+tf.disable_v2_behavior()
 
 class Model(object):
   """ResNet model."""
@@ -54,6 +56,7 @@ class Model(object):
 
     # Update hps.num_residual_units to 9
 
+    # NOTE: Variable_scope might be an issue? Prob doesn't exist in TF2.
     with tf.variable_scope('unit_1_0'):
       x = res_func(x, filters[0], filters[1], self._stride_arr(strides[0]),
                    activate_before_residual[0])
@@ -108,6 +111,8 @@ class Model(object):
           activation_fn=None,
           updates_collections=None,
           is_training=(self.mode == 'train'))
+
+      
 
   def _residual(self, x, in_filter, out_filter, stride,
                 activate_before_residual=False):
